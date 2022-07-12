@@ -25,7 +25,6 @@ body{
 .health-bar{
     background-color: yellow;
     height: 30px;
-    flex: 1;
 }
 .timer{
     background-color: red;
