@@ -8,31 +8,22 @@
     <title>Fighting Game</title>
 </head>
 <body>
-    <div style="position: relative; display: inline-bloc;">
+    <div class="game-area">
         <div class="game-interface">
             <!-- player health -->
-            <div style="position: relative; width: 100%; height: 30px;">
+            <div id="player-health--area">
                 <div class="health-bar"></div>
-                <div id="playerHealth"
-                    style="
-                    position: absolute; 
-                    background-color: blue; 
-                    top: 0; left: 0; right: 0; bottom: 0;">
-                </div>
+                <div id="playerHealth"></div>
             </div>
             <!-- time -->
-            <div class="timer"></div>
+            <div id="timer" class="timer">10</div>
             <!-- enemy health -->
-            <div style="position: relative; width: 100%; height: 30px;">
+            <div id="enemy-health--area">
                 <div class="health-bar"></div>
-                <div id="enemyHealth"
-                    style="
-                    position: absolute; 
-                    background-color: blue; 
-                    top: 0; left: 0; right: 0; bottom: 0;">
-                </div>
+                <div id="enemyHealth"></div>
             </div>
         </div>
+        <div id="display-text" class="winner-text">Tie</div>
         <canvas></canvas>
     </div>
     <script src="index.js"></script>

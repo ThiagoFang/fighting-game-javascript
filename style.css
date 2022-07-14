@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +13,12 @@ body{
     padding: 0
 }
 
-.game-interface{
+.game-area {
+    position: relative;
+    display: inline-block;
+}
+
+.game-interface {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,18 +26,57 @@ body{
     width: 100%;
     padding: 20px;
 }
-
-.health-bar{
+.health-bar {
     background-color: yellow;
     height: 30px;
 }
-.timer{
+#player-health--area {
+    position: relative; 
+    width: 100%; 
+    height: 30px; 
+    display: flex; 
+    justify-content: flex-end;
+}
+#player-health--area .health-bar {
+    width: 100%;
+}
+#player-health--area #playerHealth {
+    position: absolute; 
+    background-color: blue; 
+    width: 100%;
+    top: 0; right: 0; bottom: 0;
+}
+
+#enemy-health--area {
+    position: relative; 
+    width: 100%; 
+    height: 30px;
+}
+#enemy-health--area #enemyHealth {
+    position: absolute; 
+    background-color: blue; 
+    top: 0; left: 0; right: 0; bottom: 0;
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: center;
     background-color: red;
     height: 100px;
     width: 100px;
     flex-shrink: 0;
 }
 
+.winner-text {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    color: #FFF;
+    top: 0; left: 0; right: 0; bottom: 0;
+}
 
 /* style="background-color: yellow; height: 30px; width: 100px;" */
 
