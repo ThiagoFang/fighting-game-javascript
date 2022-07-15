@@ -5,7 +5,7 @@ const canvasContext = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 576;
 canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-const gravity = 0.3;
+const gravity = 0.4;
 
 const background = new Sprite({
     position: {
@@ -14,6 +14,16 @@ const background = new Sprite({
     },
     imageSrc: './assets/background.png'
 })
+
+const shop = new Sprite({
+    position: {
+        x: 600,
+        y: 128
+    },
+    imageSrc: './assets/shop.png',
+    scale: 2.75,
+    framesMax: 6
+});
 
 //Player 1 Area
 const player = new Fighter({
@@ -79,6 +89,7 @@ const animate = () => {
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     background.update();
+    shop.update();
     player.update();
     enemy.update();
 
