@@ -1,7 +1,6 @@
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
 
-//video at 
 canvas.width = 1024;
 canvas.height = 576;
 canvasContext.fillRect(0, 0, canvas.width, canvas.height);
@@ -35,10 +34,6 @@ const player = new Fighter({
        x: 0,
        y: 0
     },
-    offset: {
-        x: 0,
-        y: 0
-    },
     imageSrc: './assets/samuraiMack/Idle.png',
     framesMax: 8,
     scale: 2.5,
@@ -46,6 +41,24 @@ const player = new Fighter({
         x: 215,
         y: 157
     },
+    sprites: {
+        idle: {
+            imageSrc: './assets/samuraiMack/Idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './assets/samuraiMack/Run.png',
+            framesMax: 8
+        },
+        jump: {
+            imageSrc: './assets/samuraiMack/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './assets/samuraiMack/Fall.png',
+            framesMax: 2,
+        }
+    }
 });
 player.draw();
 
@@ -104,10 +117,22 @@ const animate = () => {
     enemy.velocity.x = 0;
 
     //Player Moviments
+    player.framesMax = player.sprites.idle.framesMax
     if (keys.a.pressed && player.lastKey === 'a') {
-        player.velocity.x = -5
+        player.velocity.x = - 5
+        player.switchSprite('run');
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
+        player.switchSprite('run');
+    } else {
+        player.switchSprite('idle');
+    }
+
+    if(player.velocity.y < 0) {
+        player.switchSprite('jump');
+    };
+    if(player.velocity.y > 0) {
+        player.switchSprite('fall');
     };
 
     //Enemy Moviments
@@ -159,7 +184,9 @@ window.addEventListener('keydown', (event) => {
             player.lastKey = 'a';
             break;
         case 'w':
-            player.velocity.y = -15;
+            if(player.velocity.y === 0){
+                player.velocity.y = -15;
+            }
             break;
         case ' ':
             player.attack();
