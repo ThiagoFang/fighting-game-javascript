@@ -1,5 +1,14 @@
 class Sprite {
-    constructor ( { position, imageSrc, scale = 1, framesMax = 1} ) {
+    constructor ({
+        position,
+        imageSrc,
+        scale = 1,
+        framesMax = 1,
+        offset = {
+            x: 0,
+            y: 0 
+        },
+    }) {
         this.position = position;
         this.width = 50;
         this.height = 150;
@@ -10,8 +19,10 @@ class Sprite {
         this.frameCurrent = 0
         this.framesElapsed = 0
         this.framesHold = 8
+        this.offset = offset
     };
 
+    // --- Methods
     draw() {
         canvasContext.drawImage(
             this.image,
@@ -19,30 +30,52 @@ class Sprite {
             0,
             this.image.width / this.framesMax,
             this.image.height,
-            this.position.x, 
-            this.position.y, 
+            this.position.x - this.offset.x, 
+            this.position.y - this.offset.y, 
             (this.image.width / this.framesMax) * this.scale, 
             this.image.height * this.scale
         );
     };
-    update() {
-        this.draw();
-        this.framesElapsed++
 
+    animateFrames() {
+        this.framesElapsed++;
         if(this.framesElapsed % this.framesHold === 0) {
             if(this.frameCurrent < this.framesMax - 1) {
-                this.frameCurrent++
+                this.frameCurrent++;
             } else {
-                this.frameCurrent = 0
-            }
-        }
+                this.frameCurrent = 0;
+            };
+        };
+    }
 
+    update() {
+        this.draw();
+        this.framesElapsed++;
+        this.animateFrames()
     };
 };
 
-class Fighter {
-    constructor ( {position, velocity, color = 'red', offset} ) {
-        this.position = position;
+class Fighter extends Sprite {
+    constructor({
+        position, 
+        velocity, 
+        color = 'red',
+        imageSrc, 
+        scale = 1, 
+        framesMax = 1,
+        offset = {
+            x: 0,
+            y: 0 
+        },
+    }) {
+        super({
+            position,
+            imageSrc,
+            scale,
+            framesMax,
+            offset,
+        });
+
         this.velocity = velocity;
         this.width = 50;
         this.height = 150;
@@ -57,23 +90,18 @@ class Fighter {
             height: 50,
         };
         this.color = color;
-        this.isAttacking
-        this.health = 100
-    };
+        this.isAttacking;
+        this.health = 100;
 
-    draw() {
-        canvasContext.fillStyle = this.color;
-        canvasContext.fillRect(this.position.x, this.position.y, this.width, this.height);
-
-        //atack box
-        if(this.isAttacking) {
-            canvasContext.fillStyle = 'green';
-            canvasContext.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height);
-        }
+        this.frameCurrent = 0
+        this.framesElapsed = 0
+        this.framesHold = 10
     };
 
     update() {
         this.draw();
+        this.animateFrames();
+
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
         this.attackBox.position.y = this.position.y;
 
