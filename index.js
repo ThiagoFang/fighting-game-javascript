@@ -57,6 +57,10 @@ const player = new Fighter({
         fall: {
             imageSrc: './assets/samuraiMack/Fall.png',
             framesMax: 2,
+        },
+        attack1: {
+            imageSrc: './assets/samuraiMack/Attack1.png',
+            framesMax: 6
         }
     }
 });
@@ -76,6 +80,35 @@ const enemy = new Fighter({
     offset: {
         x: -50,
         y: 0
+    },
+    imageSrc: './assets/Kenji/Idle.png',
+    framesMax: 4,
+    scale: 2.5,
+    offset: {
+        x: 215,
+        y: 167
+    },
+    sprites: {
+        idle: {
+            imageSrc: './assets/Kenji/Idle.png',
+            framesMax: 4
+        },
+        run: {
+            imageSrc: './assets/Kenji/Run.png',
+            framesMax: 8
+        },
+        jump: {
+            imageSrc: './assets/Kenji/Jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './assets/Kenji/Fall.png',
+            framesMax: 2,
+        },
+        attack1: {
+            imageSrc: './assets/Kenji/Attack1.png',
+            framesMax: 4
+        }
     }
 });
 enemy.draw();
@@ -111,13 +144,12 @@ const animate = () => {
     background.update();
     shop.update();
     player.update();
-    // enemy.update();
+    enemy.update();
 
     player.velocity.x = 0;
     enemy.velocity.x = 0;
 
     //Player Moviments
-    player.framesMax = player.sprites.idle.framesMax
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = - 5
         player.switchSprite('run');
@@ -138,8 +170,19 @@ const animate = () => {
     //Enemy Moviments
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5;
+        enemy.switchSprite('run');
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5;
+        enemy.switchSprite('run');
+    } else {
+        enemy.switchSprite('idle');
+    }
+
+    if(enemy.velocity.y < 0) {
+        enemy.switchSprite('jump');
+    };
+    if(enemy.velocity.y > 0) {
+        enemy.switchSprite('fall');
     };
 
     //Detect Collision
@@ -201,7 +244,9 @@ window.addEventListener('keydown', (event) => {
             enemy.lastKey = 'ArrowLeft';
             break;
         case 'ArrowUp':
-            enemy.velocity.y = -15;
+            if(enemy.velocity.y === 0) {
+                enemy.velocity.y = -15;
+            }
             break;
         case 'ArrowDown':
             enemy.attack();
