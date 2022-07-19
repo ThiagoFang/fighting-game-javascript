@@ -34,6 +34,6 @@ Esse projéto foi especial para mim, foi o primeiro grande tutorial em outra lin
 </div>
 <div align="center">
 
-## <a href="https://thiagofang.github.io/fighting-game-javascript/">**Clique aqui para visitar o Projéto**</a>
+## <a href="https://thiagofang-fighting-game.netlify.app/">**Clique aqui para visitar o Projéto**</a>
 
 </div>
